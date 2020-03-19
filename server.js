@@ -25,6 +25,15 @@ app.get("/api/hello", function (req, res) {
 });
 
 
+app.get("/api/timestamp/:value?", function (req, res) {
+  const kInvalid = "Invalid Date";
+  var value = req.params.value;
+  var date = value != null ? (new Date(value) != kInvalid ? new Date(value) : new Date(parseInt(value))) : new Date();
+  
+  date != kInvalid ? res.json({unix: date.getTime(), utc: date.toUTCString()}) : res.json({error: kInvalid});
+});
+
+
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
